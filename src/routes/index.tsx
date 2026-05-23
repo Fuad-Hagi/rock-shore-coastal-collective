@@ -5,6 +5,13 @@ import { ArrowRight } from "lucide-react";
 import { fetchProducts } from "@/lib/shopify";
 import { ProductCard } from "@/components/ProductCard";
 import { EmptyProducts } from "@/components/EmptyProducts";
+import logoMark from "@/assets/logo.webp";
+import teeSand from "@/assets/product-tee-sand.jpg";
+import hoodieNavy from "@/assets/product-hoodie-navy.jpg";
+import capSlate from "@/assets/product-cap-slate.jpg";
+import crewCream from "@/assets/product-crew-cream.jpg";
+import beanie from "@/assets/product-beanie.jpg";
+import lifestyleJacket from "@/assets/lifestyle-jacket.jpg";
 
 const productsQO = queryOptions({
   queryKey: ["products", "new-arrivals"],
@@ -28,28 +35,19 @@ export const Route = createFileRoute("/")({
 
 const HERO =
   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80";
+
 const COLLECTIONS = [
-  {
-    title: "Men",
-    image:
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=80",
-    href: "/shop",
-    category: "Men",
-  },
-  {
-    title: "Women",
-    image:
-      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=80",
-    href: "/shop",
-    category: "Women",
-  },
-  {
-    title: "Accessories",
-    image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80",
-    href: "/shop",
-    category: "Accessories",
-  },
+  { title: "Tees", image: teeSand, category: "Men" },
+  { title: "Hoodies", image: hoodieNavy, category: "Men" },
+  { title: "Headwear", image: capSlate, category: "Accessories" },
+];
+
+const SIGNATURE = [
+  { title: "Signature Script Tee", price: "$48", image: teeSand, tag: "Sand" },
+  { title: "Heritage Hoodie", price: "$98", image: hoodieNavy, tag: "Deep Ocean" },
+  { title: "Script Dad Cap", price: "$38", image: capSlate, tag: "Slate" },
+  { title: "Coastal Crewneck", price: "$78", image: crewCream, tag: "Cream" },
+  { title: "Harbor Beanie", price: "$32", image: beanie, tag: "Charcoal" },
 ];
 
 function Home() {
