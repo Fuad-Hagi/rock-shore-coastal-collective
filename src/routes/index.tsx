@@ -72,12 +72,15 @@ function Home() {
           <p className="text-xs uppercase tracking-[0.4em] text-white/80">
             Spring · Summer Collection
           </p>
-          <h1 className="mt-6 font-display text-5xl font-semibold tracking-tight md:text-7xl lg:text-8xl text-balance">
-            Rock & Shore
-          </h1>
+          <img
+            src={logoMark}
+            alt="Rock & Shore"
+            className="mt-8 h-28 md:h-40 w-auto drop-shadow-2xl"
+          />
+          <h1 className="sr-only">Rock & Shore</h1>
           <p className="mt-6 max-w-xl text-base text-white/85 md:text-lg text-balance">
-            Coastal essentials built for the rhythm of the tide. Salt-washed
-            textures, sun-bleached neutrals, made for the long way home.
+            Let your river flow. Coastal & outdoor essentials built for the
+            rhythm of the tide — for hikers, surfers, and street wanderers.
           </p>
           <Link
             to="/shop"
