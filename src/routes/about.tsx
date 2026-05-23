@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Waves, Leaf, Users } from "lucide-react";
+import { Droplets, Mountain, Wind } from "lucide-react";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Built for those who live between the waves and the shore. The story of Rock & Shore.",
+          "Let your river flow. The story of Rock & Shore — apparel built for outdoor lovers and streetwear enthusiasts.",
       },
     ],
   }),
@@ -17,79 +17,82 @@ export const Route = createFileRoute("/about")({
 
 const VALUES = [
   {
-    icon: Leaf,
-    title: "Sustainability",
-    desc: "Organic fibers, low-impact dyes, and packaging that returns to the earth.",
+    icon: Droplets,
+    title: "Let Your River Flow",
+    desc: "A constant reminder that no matter the circumstance, always look inside, find that river flow, and push forward.",
   },
   {
-    icon: Waves,
-    title: "Quality",
-    desc: "Garments built to soften with use — not fall apart with it.",
+    icon: Mountain,
+    title: "Built for the Outdoors",
+    desc: "Designed for durability, comfort, and water stain resistance — for hiking, biking, running, and every adventure.",
   },
   {
-    icon: Users,
-    title: "Community",
-    desc: "Designed alongside surfers, fishermen, and coastal makers we love.",
+    icon: Wind,
+    title: "Style Meets Function",
+    desc: "Streetwear aesthetics meet outdoor performance. For the lovers of mountains, rivers, oceans, and urban fashion.",
   },
 ];
 
-const TEAM = [
-  {
-    name: "Maren Holloway",
-    role: "Founder & Creative Director",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    name: "Eli Vasquez",
-    role: "Head of Design",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    name: "Saoirse Bay",
-    role: "Materials Lead",
-    img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=80",
-  },
+const PRODUCTS = [
+  "Beanies",
+  "Hats",
+  "Backpacks for camping & sporting",
+  "Winter waterproof Jackets",
+  "Hoodies",
+  "Pants",
+  "Waterproof style performance pants",
+  "Athlete shoes",
+  "Fashion shoes",
+  "Winter boots",
+  "T-Shirts",
+  "Long sleeves",
+  "Flannel shirts",
+  "Mug cups",
+  "Tumblers",
 ];
 
 function About() {
   return (
     <div>
+      {/* Hero */}
       <section className="relative h-[60vh] min-h-[420px] overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1437846972679-9e6e537be46e?auto=format&fit=crop&w=2400&q=80"
-          alt="Empty coastal beach at dawn"
+          alt="Flowing river through rocky terrain"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/35" />
+        <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 container-x flex h-full items-end pb-14 text-white">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-white/80">
               Our story
             </p>
             <h1 className="mt-3 font-display text-4xl md:text-6xl font-semibold tracking-tight">
-              Between the waves and the shore.
+              Let Your River Flow.
             </h1>
           </div>
         </div>
       </section>
 
+      {/* Slogan / Philosophy */}
       <section className="container-x py-20 md:py-28">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-            Mission
+            Our slogan
           </p>
           <p className="mt-6 font-display text-2xl md:text-3xl leading-snug text-balance">
-            "Built for those who live between the waves and the shore."
+            "Let your river flow."
           </p>
           <p className="mt-6 text-muted-foreground leading-relaxed">
-            Rock & Shore began as a quiet conversation between two friends about
-            what coastal living actually feels like — not the postcard version,
-            but the worn-in, sand-on-the-floorboards reality. Every piece we make
-            is a small answer to that question.
+            When you look to a river or ocean it is constantly rushing forward
+            through any rocks or barriers hitting shores — this is a constant
+            reminder no matter the circumstance to always look inside, find
+            that river flow, and push forward.
           </p>
         </div>
       </section>
 
+      {/* Values */}
       <section className="bg-sand">
         <div className="container-x py-20 md:py-28">
           <div className="mb-12 text-center">
@@ -119,29 +122,80 @@ function About() {
         </div>
       </section>
 
+      {/* Our Story */}
       <section className="container-x py-20 md:py-28">
-        <div className="mb-12 text-center">
+        <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
-            The crew
+            How it began
           </p>
           <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold tracking-tight">
-            Meet the team
+            The story of Rock & Shore
           </h2>
+          <p className="mt-8 text-muted-foreground leading-relaxed">
+            Our wear was created for the outdoor lovers and streetwear styling
+            people passionate about letting their river flow. Rock & Shore was
+            first envisioned in 2019 before being founded in 2020 when the
+            founder became passionate about how healing the river, ocean, and
+            outdoors became.
+          </p>
+          <p className="mt-6 text-muted-foreground leading-relaxed">
+            Rock & Shore was designed to enhance your day-to-day walk and
+            travels. As an avid fashionista and traveler, the founder of Rock &
+            Shore is inspired by and likes to frequent the various mountains,
+            rivers, and oceans of the world as a constant reminder to "let your
+            river flow."
+          </p>
         </div>
-        <div className="grid gap-8 md:grid-cols-3">
-          {TEAM.map((t) => (
-            <div key={t.name}>
-              <div className="aspect-[4/5] overflow-hidden bg-secondary">
-                <img
-                  src={t.img}
-                  alt={t.name}
-                  className="h-full w-full object-cover"
-                />
+      </section>
+
+      {/* Product Line */}
+      <section className="bg-sand">
+        <div className="container-x py-20 md:py-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+              The collection
+            </p>
+            <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold tracking-tight">
+              Our product line
+            </h2>
+            <p className="mt-6 text-muted-foreground leading-relaxed">
+              The apparel and gear appeal to all ages and includes apparel lines
+              for men, women, and children to enjoy. The clothing line is known
+              for its durability, comfort, and water stain resistance.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-px bg-border sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+            {PRODUCTS.map((item) => (
+              <div
+                key={item}
+                className="bg-background px-6 py-5 text-sm font-medium text-foreground text-center"
+              >
+                {item}
               </div>
-              <h3 className="mt-4 font-display text-lg">{t.name}</h3>
-              <p className="text-sm text-muted-foreground">{t.role}</p>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Closing / Purpose */}
+      <section className="container-x py-20 md:py-28">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            For the journey
+          </p>
+          <p className="mt-6 font-display text-2xl md:text-3xl leading-snug text-balance">
+            For the lovers of the mountains, the rivers, and the oceans.
+          </p>
+          <p className="mt-6 text-muted-foreground leading-relaxed">
+            Whether you love hiking, biking, running, river rafting, or just
+            urban fashion, Rock & Shore has something that will enhance your
+            experience as you "let your river flow" on your everyday walk and
+            travel expeditions.
+          </p>
+          <p className="mt-10 font-display text-sm uppercase tracking-[0.25em] text-slate-warm">
+            John 7:38–39
+          </p>
         </div>
       </section>
     </div>
