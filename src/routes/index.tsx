@@ -5,6 +5,13 @@ import { ArrowRight } from "lucide-react";
 import { fetchProducts } from "@/lib/shopify";
 import { ProductCard } from "@/components/ProductCard";
 import { EmptyProducts } from "@/components/EmptyProducts";
+import logoMark from "@/assets/logo.webp";
+import teeSand from "@/assets/product-tee-sand.jpg";
+import hoodieNavy from "@/assets/product-hoodie-navy.jpg";
+import capSlate from "@/assets/product-cap-slate.jpg";
+import crewCream from "@/assets/product-crew-cream.jpg";
+import beanie from "@/assets/product-beanie.jpg";
+import lifestyleJacket from "@/assets/lifestyle-jacket.jpg";
 
 const productsQO = queryOptions({
   queryKey: ["products", "new-arrivals"],
@@ -28,28 +35,19 @@ export const Route = createFileRoute("/")({
 
 const HERO =
   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80";
+
 const COLLECTIONS = [
-  {
-    title: "Men",
-    image:
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1200&q=80",
-    href: "/shop",
-    category: "Men",
-  },
-  {
-    title: "Women",
-    image:
-      "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=80",
-    href: "/shop",
-    category: "Women",
-  },
-  {
-    title: "Accessories",
-    image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80",
-    href: "/shop",
-    category: "Accessories",
-  },
+  { title: "Tees", image: teeSand, category: "Men" },
+  { title: "Hoodies", image: hoodieNavy, category: "Men" },
+  { title: "Headwear", image: capSlate, category: "Accessories" },
+];
+
+const SIGNATURE = [
+  { title: "Signature Script Tee", price: "$48", image: teeSand, tag: "Sand" },
+  { title: "Heritage Hoodie", price: "$98", image: hoodieNavy, tag: "Deep Ocean" },
+  { title: "Script Dad Cap", price: "$38", image: capSlate, tag: "Slate" },
+  { title: "Coastal Crewneck", price: "$78", image: crewCream, tag: "Cream" },
+  { title: "Harbor Beanie", price: "$32", image: beanie, tag: "Charcoal" },
 ];
 
 function Home() {
@@ -74,12 +72,15 @@ function Home() {
           <p className="text-xs uppercase tracking-[0.4em] text-white/80">
             Spring · Summer Collection
           </p>
-          <h1 className="mt-6 font-display text-5xl font-semibold tracking-tight md:text-7xl lg:text-8xl text-balance">
-            Rock & Shore
-          </h1>
+          <img
+            src={logoMark}
+            alt="Rock & Shore"
+            className="mt-8 h-28 md:h-40 w-auto drop-shadow-2xl"
+          />
+          <h1 className="sr-only">Rock & Shore</h1>
           <p className="mt-6 max-w-xl text-base text-white/85 md:text-lg text-balance">
-            Coastal essentials built for the rhythm of the tide. Salt-washed
-            textures, sun-bleached neutrals, made for the long way home.
+            Let your river flow. Coastal & outdoor essentials built for the
+            rhythm of the tide — for hikers, surfers, and street wanderers.
           </p>
           <Link
             to="/shop"
@@ -133,8 +134,56 @@ function Home() {
         </div>
       </section>
 
+      {/* SIGNATURE APPAREL */}
+      <section className="bg-sand">
+        <div className="container-x py-20 md:py-28">
+          <div className="mb-12 flex items-end justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                The script collection
+              </p>
+              <h2 className="mt-2 font-display text-3xl md:text-4xl font-semibold tracking-tight">
+                Signature Apparel
+              </h2>
+            </div>
+            <Link
+              to="/shop"
+              className="hidden md:inline-flex items-center gap-2 text-xs uppercase tracking-widest hover:text-accent"
+            >
+              Shop all <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-6">
+            {SIGNATURE.map((p) => (
+              <Link
+                key={p.title}
+                to="/shop"
+                className="group block"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden bg-background">
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                <div className="mt-3 flex items-baseline justify-between gap-2">
+                  <h3 className="text-sm font-medium leading-tight">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground tabular-nums">
+                    {p.price}
+                  </p>
+                </div>
+                <p className="mt-0.5 text-xs uppercase tracking-wider text-muted-foreground">
+                  {p.tag}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* NEW ARRIVALS */}
-      <section className="container-x pb-20 md:pb-28">
+      <section className="container-x py-20 md:py-28">
         <div className="mb-12 flex items-end justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
@@ -163,31 +212,31 @@ function Home() {
       </section>
 
       {/* BRAND STORY */}
-      <section className="bg-sand">
+      <section className="bg-ocean text-background">
         <div className="container-x grid items-center gap-12 py-20 md:grid-cols-2 md:py-28">
           <div className="relative aspect-[4/5] overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=1400&q=80"
-              alt="Surfer walking toward the ocean"
+              src={lifestyleJacket}
+              alt="Rock & Shore navy shell jacket on a rocky coastline"
               className="h-full w-full object-cover"
             />
           </div>
           <div className="max-w-lg">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+            <p className="text-xs uppercase tracking-[0.3em] text-background/70">
               Our story
             </p>
             <h2 className="mt-3 font-display text-3xl md:text-4xl font-semibold tracking-tight text-balance">
-              Made for those who live by the tide.
+              Made for those who let their river flow.
             </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              Born on the Pacific coast, Rock & Shore is a quiet love letter to
-              long mornings, salt air, and the gentle weight of a worn-in cotton
-              tee. We design slowly, source carefully, and make pieces meant to
-              soften with every wash and every wave.
+            <p className="mt-6 leading-relaxed text-background/80">
+              Born between the mountains and the shore, Rock & Shore is built
+              for outdoor lovers and streetwear wanderers alike. Durable,
+              comfortable, water-stain resistant — gear to carry you from the
+              trail to the tide and back into town.
             </p>
             <Link
               to="/about"
-              className="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium hover:text-accent"
+              className="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-widest font-medium hover:text-sand"
             >
               Read more <ArrowRight className="h-3.5 w-3.5" />
             </Link>
