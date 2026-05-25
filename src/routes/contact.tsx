@@ -79,9 +79,6 @@ function Contact() {
         </form>
 
         <aside className="space-y-8 lg:border-l lg:border-border lg:pl-12">
-          <Info icon={MapPin} title="Visit the shop">
-            218 Coastline Hwy<br />Half Moon Bay, CA 94019
-          </Info>
           <Info icon={Mail} title="Email">
             hello@rockandshore.co
           </Info>
