@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { MapPin, Mail, Instagram, Twitter, Facebook } from "lucide-react";
+import { Mail, Instagram, Twitter, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/contact")({
@@ -79,9 +79,6 @@ function Contact() {
         </form>
 
         <aside className="space-y-8 lg:border-l lg:border-border lg:pl-12">
-          <Info icon={MapPin} title="Visit the shop">
-            218 Coastline Hwy<br />Half Moon Bay, CA 94019
-          </Info>
           <Info icon={Mail} title="Email">
             hello@rockandshore.co
           </Info>

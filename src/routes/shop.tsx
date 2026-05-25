@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { EmptyProducts } from "@/components/EmptyProducts";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { X } from "lucide-react";
 
 const searchSchema = z.object({
@@ -33,7 +34,17 @@ export const Route = createFileRoute("/shop")({
   }),
 });
 
-const CATEGORIES = ["Men", "Women", "Accessories"];
+const TABS = [
+  "All",
+  "Children & Toddlers",
+  "Footwear",
+  "Backpacks & Carry Bags",
+  "Jackets & Hoodies",
+  "Women's Fashion Apparel",
+  "Men's Fashion Apparel",
+  "Performance Wear",
+];
+
 const SIZES = ["XS", "S", "M", "L", "XL"];
 const COLORS = ["Sand", "White", "Slate", "Navy", "Ocean", "Black"];
 
@@ -42,8 +53,7 @@ function Shop() {
   const navigate = Route.useNavigate();
   const { data: products } = useSuspenseQuery(productsQO);
 
-  const initialCategories = search.category ? [search.category] : [];
-  const [cats, setCats] = useState<string[]>(initialCategories);
+  const activeTab = search.category ?? "All";
   const [sizes, setSizes] = useState<string[]>([]);
   const [colors, setColors] = useState<string[]>([]);
   const [maxPrice, setMaxPrice] = useState(500);
@@ -53,17 +63,24 @@ function Shop() {
       const node = p.node;
       const price = parseFloat(node.priceRange.minVariantPrice.amount);
       if (price > maxPrice) return false;
-      if (cats.length) {
-        const matches = cats.some((c) => {
-          const lc = c.toLowerCase();
-          return (
-            node.productType?.toLowerCase().includes(lc) ||
-            node.tags?.some((t) => t.toLowerCase().includes(lc)) ||
-            node.title.toLowerCase().includes(lc)
+
+      if (activeTab !== "All") {
+        const lc = activeTab.toLowerCase();
+        const tabWords = activeTab.toLowerCase().split(/\s+|\&/);
+        const matchesTab =
+          node.productType?.toLowerCase().includes(lc) ||
+          node.tags?.some((t) => t.toLowerCase().includes(lc)) ||
+          node.title.toLowerCase().includes(lc) ||
+          tabWords.some(
+            (w: string) =>
+              w.length > 2 &&
+              (node.productType?.toLowerCase().includes(w) ||
+                node.tags?.some((t) => t.toLowerCase().includes(w)) ||
+                node.title.toLowerCase().includes(w)),
           );
-        });
-        if (!matches) return false;
+        if (!matchesTab) return false;
       }
+
       if (sizes.length) {
         const variantSizes = node.variants.edges.flatMap((v) =>
           v.node.selectedOptions
@@ -83,7 +100,7 @@ function Shop() {
       }
       return true;
     });
-  }, [products, cats, sizes, colors, maxPrice]);
+  }, [products, activeTab, sizes, colors, maxPrice]);
 
   const toggle = (
     arr: string[],
@@ -94,11 +111,14 @@ function Shop() {
   };
 
   const clearAll = () => {
-    setCats([]);
     setSizes([]);
     setColors([]);
     setMaxPrice(500);
     navigate({ search: {} });
+  };
+
+  const setTab = (tab: string) => {
+    navigate({ search: tab === "All" ? {} : { category: tab } });
   };
 
   return (
@@ -108,8 +128,25 @@ function Shop() {
           Shop
         </p>
         <h1 className="mt-2 font-display text-4xl md:text-5xl font-semibold tracking-tight">
-          {cats.length === 1 ? cats[0] : "All Products"}
+          {activeTab === "All" ? "All Products" : activeTab}
         </h1>
+      </div>
+
+      {/* CATEGORY TABS */}
+      <div className="mb-10 overflow-x-auto">
+        <Tabs value={activeTab} onValueChange={setTab}>
+          <TabsList className="h-auto flex-wrap gap-2 bg-transparent p-0">
+            {TABS.map((t) => (
+              <TabsTrigger
+                key={t}
+                value={t}
+                className="rounded-full border border-border bg-background px-4 py-2 text-xs uppercase tracking-wider data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:border-foreground"
+              >
+                {t}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
       </div>
 
       <div className="grid gap-10 lg:grid-cols-[240px_1fr] lg:gap-12">
@@ -126,18 +163,6 @@ function Shop() {
               <X className="h-3 w-3" /> Clear
             </button>
           </div>
-
-          <FilterGroup title="Category">
-            {CATEGORIES.map((c) => (
-              <label key={c} className="flex items-center gap-2 text-sm cursor-pointer">
-                <Checkbox
-                  checked={cats.includes(c)}
-                  onCheckedChange={() => toggle(cats, setCats, c)}
-                />
-                {c}
-              </label>
-            ))}
-          </FilterGroup>
 
           <FilterGroup title="Size">
             <div className="flex flex-wrap gap-2">
