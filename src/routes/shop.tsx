@@ -72,7 +72,7 @@ function Shop() {
           node.tags?.some((t) => t.toLowerCase().includes(lc)) ||
           node.title.toLowerCase().includes(lc) ||
           tabWords.some(
-            (w) =>
+            (w: string) =>
               w.length > 2 &&
               (node.productType?.toLowerCase().includes(w) ||
                 node.tags?.some((t) => t.toLowerCase().includes(w)) ||
