@@ -35,11 +35,16 @@ function Contact() {
           onSubmit={(e) => {
             e.preventDefault();
             setSending(true);
+            const subject = `Rock & Shore inquiry from ${form.name}`;
+            const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
+            const mailto = `mailto:rockandshore@gmail.com?subject=${encodeURIComponent(
+              subject,
+            )}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailto;
             setTimeout(() => {
-              toast.success("Message sent. We'll be in touch soon.");
-              setForm({ name: "", email: "", message: "" });
+              toast.success("Opening your email app to send the message.");
               setSending(false);
-            }, 600);
+            }, 400);
           }}
           className="space-y-6"
         >
