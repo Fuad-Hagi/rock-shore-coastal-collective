@@ -15,8 +15,8 @@ import lifestyleJacket from "@/assets/lifestyle-jacket.jpg";
 import heroVideo from "@/assets/hero-beach.mp4.asset.json";
 
 const productsQO = queryOptions({
-  queryKey: ["products", "new-arrivals"],
-  queryFn: () => fetchProducts(4),
+  queryKey: ["products", "home-all"],
+  queryFn: () => fetchProducts(20),
 });
 
 export const Route = createFileRoute("/")({
@@ -34,14 +34,13 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-
-const COLLECTIONS = [
+const FALLBACK_COLLECTIONS = [
   { title: "Tees", image: teeSand, category: "Men" },
   { title: "Hoodies", image: hoodieNavy, category: "Men" },
   { title: "Headwear", image: capSlate, category: "Accessories" },
 ];
 
-const SIGNATURE = [
+const FALLBACK_SIGNATURE = [
   { title: "Signature Script Tee", price: "$48", image: teeSand, tag: "Sand" },
   { title: "Heritage Hoodie", price: "$98", image: hoodieNavy, tag: "Deep Ocean" },
   { title: "Script Dad Cap", price: "$38", image: capSlate, tag: "Slate" },
@@ -49,8 +48,56 @@ const SIGNATURE = [
   { title: "Harbor Beanie", price: "$32", image: beanie, tag: "Charcoal" },
 ];
 
+function formatPrice(amount: string, currencyCode: string) {
+  try {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currencyCode,
+      maximumFractionDigits: 0,
+    }).format(Number(amount));
+  } catch {
+    return `$${Math.round(Number(amount))}`;
+  }
+}
+
 function Home() {
   const { data: products } = useSuspenseQuery(productsQO);
+
+  // Derive Signature Apparel from Shopify products (first 5) — falls back to static when empty
+  const signature = products.length
+    ? products.slice(0, 5).map((p) => {
+        const node = p.node;
+        const img = node.images.edges[0]?.node;
+        return {
+          handle: node.handle,
+          title: node.title,
+          price: formatPrice(
+            node.priceRange.minVariantPrice.amount,
+            node.priceRange.minVariantPrice.currencyCode,
+          ),
+          image: img?.url ?? teeSand,
+          alt: img?.altText ?? node.title,
+          tag: node.productType || node.tags?.[0] || "",
+        };
+      })
+    : null;
+
+  // Derive Featured Collections from Shopify productType groups — falls back to static
+  const typeMap = new Map<string, (typeof products)[number]>();
+  for (const p of products) {
+    const t = p.node.productType?.trim();
+    if (t && !typeMap.has(t)) typeMap.set(t, p);
+  }
+  const collections = typeMap.size
+    ? Array.from(typeMap.entries())
+        .slice(0, 3)
+        .map(([title, p]) => ({
+          title,
+          image: p.node.images.edges[0]?.node.url ?? teeSand,
+          category: title,
+        }))
+    : null;
+
 
   return (
     <div>
@@ -112,7 +159,7 @@ function Home() {
           </Link>
         </div>
         <div className="grid gap-4 md:grid-cols-3 md:gap-6">
-          {COLLECTIONS.map((c) => (
+          {(collections ?? FALLBACK_COLLECTIONS).map((c) => (
             <Link
               key={c.title}
               to="/shop"
@@ -156,10 +203,11 @@ function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-6">
-            {SIGNATURE.map((p) => (
+            {(signature ?? FALLBACK_SIGNATURE).map((p) => (
               <Link
                 key={p.title}
-                to="/shop"
+                to={"handle" in p && p.handle ? "/product/$handle" : "/shop"}
+                params={"handle" in p && p.handle ? { handle: p.handle } : undefined as never}
                 className="group block"
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-background">
