@@ -80,7 +80,7 @@ function Contact() {
 
         <aside className="space-y-8 lg:border-l lg:border-border lg:pl-12">
           <Info icon={Mail} title="Email">
-            hello@rockandshore.co
+            rockandshore@gmail.com
           </Info>
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
