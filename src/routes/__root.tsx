@@ -90,6 +90,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Rock & Shore — Coastal Lifestyle Apparel" },
+      { name: "description", content: "Rock & Shore is a modern coastal lifestyle clothing brand website." },
+      { property: "og:description", content: "Rock & Shore is a modern coastal lifestyle clothing brand website." },
+      { name: "twitter:description", content: "Rock & Shore is a modern coastal lifestyle clothing brand website." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2911ab42-c005-4120-9ee4-db25c8b348d3/id-preview-59895603--433db09d-5c9a-4e85-91e7-c26fa49f4924.lovable.app-1779842895002.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/2911ab42-c005-4120-9ee4-db25c8b348d3/id-preview-59895603--433db09d-5c9a-4e85-91e7-c26fa49f4924.lovable.app-1779842895002.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
