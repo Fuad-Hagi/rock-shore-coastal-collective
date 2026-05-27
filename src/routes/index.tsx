@@ -63,6 +63,42 @@ function formatPrice(amount: string, currencyCode: string) {
 function Home() {
   const { data: products } = useSuspenseQuery(productsQO);
 
+  // Derive Signature Apparel from Shopify products (first 5) — falls back to static when empty
+  const signature = products.length
+    ? products.slice(0, 5).map((p) => {
+        const node = p.node;
+        const img = node.images.edges[0]?.node;
+        return {
+          handle: node.handle,
+          title: node.title,
+          price: formatPrice(
+            node.priceRange.minVariantPrice.amount,
+            node.priceRange.minVariantPrice.currencyCode,
+          ),
+          image: img?.url ?? teeSand,
+          alt: img?.altText ?? node.title,
+          tag: node.productType || node.tags?.[0] || "",
+        };
+      })
+    : null;
+
+  // Derive Featured Collections from Shopify productType groups — falls back to static
+  const typeMap = new Map<string, (typeof products)[number]>();
+  for (const p of products) {
+    const t = p.node.productType?.trim();
+    if (t && !typeMap.has(t)) typeMap.set(t, p);
+  }
+  const collections = typeMap.size
+    ? Array.from(typeMap.entries())
+        .slice(0, 3)
+        .map(([title, p]) => ({
+          title,
+          image: p.node.images.edges[0]?.node.url ?? teeSand,
+          category: title,
+        }))
+    : null;
+
+
   return (
     <div>
       {/* HERO */}
