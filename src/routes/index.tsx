@@ -15,8 +15,8 @@ import lifestyleJacket from "@/assets/lifestyle-jacket.jpg";
 import heroVideo from "@/assets/hero-beach.mp4.asset.json";
 
 const productsQO = queryOptions({
-  queryKey: ["products", "new-arrivals"],
-  queryFn: () => fetchProducts(4),
+  queryKey: ["products", "home-all"],
+  queryFn: () => fetchProducts(20),
 });
 
 export const Route = createFileRoute("/")({
@@ -34,20 +34,31 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-
-const COLLECTIONS = [
+const FALLBACK_COLLECTIONS = [
   { title: "Tees", image: teeSand, category: "Men" },
   { title: "Hoodies", image: hoodieNavy, category: "Men" },
   { title: "Headwear", image: capSlate, category: "Accessories" },
 ];
 
-const SIGNATURE = [
+const FALLBACK_SIGNATURE = [
   { title: "Signature Script Tee", price: "$48", image: teeSand, tag: "Sand" },
   { title: "Heritage Hoodie", price: "$98", image: hoodieNavy, tag: "Deep Ocean" },
   { title: "Script Dad Cap", price: "$38", image: capSlate, tag: "Slate" },
   { title: "Coastal Crewneck", price: "$78", image: crewCream, tag: "Cream" },
   { title: "Harbor Beanie", price: "$32", image: beanie, tag: "Charcoal" },
 ];
+
+function formatPrice(amount: string, currencyCode: string) {
+  try {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currencyCode,
+      maximumFractionDigits: 0,
+    }).format(Number(amount));
+  } catch {
+    return `$${Math.round(Number(amount))}`;
+  }
+}
 
 function Home() {
   const { data: products } = useSuspenseQuery(productsQO);
