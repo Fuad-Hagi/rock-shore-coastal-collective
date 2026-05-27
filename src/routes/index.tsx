@@ -203,10 +203,11 @@ function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-6">
-            {SIGNATURE.map((p) => (
+            {(signature ?? FALLBACK_SIGNATURE).map((p) => (
               <Link
                 key={p.title}
-                to="/shop"
+                to={"handle" in p && p.handle ? "/product/$handle" : "/shop"}
+                params={"handle" in p && p.handle ? { handle: p.handle } : undefined as never}
                 className="group block"
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-background">
