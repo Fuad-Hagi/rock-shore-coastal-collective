@@ -12,6 +12,7 @@ import capSlate from "@/assets/product-cap-slate.jpg";
 import crewCream from "@/assets/product-crew-cream.jpg";
 import beanie from "@/assets/product-beanie.jpg";
 import lifestyleJacket from "@/assets/lifestyle-jacket.jpg";
+import heroVideo from "@/assets/hero-beach.mp4.asset.json";
 
 const productsQO = queryOptions({
   queryKey: ["products", "new-arrivals"],
@@ -33,8 +34,6 @@ export const Route = createFileRoute("/")({
   }),
 });
 
-const HERO =
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80";
 
 const COLLECTIONS = [
   { title: "Tees", image: teeSand, category: "Men" },
@@ -57,9 +56,12 @@ function Home() {
     <div>
       {/* HERO */}
       <section className="relative h-[92vh] min-h-[600px] w-full overflow-hidden">
-        <img
-          src={HERO}
-          alt="Coastal shoreline at golden hour"
+        <video
+          src={heroVideo.url}
+          autoPlay
+          muted
+          loop
+          playsInline
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/50" />
