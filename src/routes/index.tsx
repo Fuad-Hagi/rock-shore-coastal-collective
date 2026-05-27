@@ -159,7 +159,7 @@ function Home() {
           </Link>
         </div>
         <div className="grid gap-4 md:grid-cols-3 md:gap-6">
-          {COLLECTIONS.map((c) => (
+          {(collections ?? FALLBACK_COLLECTIONS).map((c) => (
             <Link
               key={c.title}
               to="/shop"
